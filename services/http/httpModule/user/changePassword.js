@@ -30,7 +30,7 @@ function User(info){
 module.exports = {
 	config : {
 		path : '/api/user/change_password',
-		method : 'get',
+		method : 'post',
 		middlewares : [],
 		model : {
 			code : 2000,
@@ -39,7 +39,7 @@ module.exports = {
 		}
 	},
 	service : async (req, res, next)=>{
-		var query = req.query;
+		var query = req.body;
 		var swc = global.swc;
 
 		let id_num = query.id_num;

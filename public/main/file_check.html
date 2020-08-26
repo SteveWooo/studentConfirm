@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="../library/vuetify.min.css" rel="stylesheet">
+
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+  <script src="../library/jquery.min.js"></script>
+  <script src="../library/vuetify.min.js"></script>
+  <script src="../library/xlsx.core.min.js"></script>
+    <script src="../library/crypto-js.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app id="app" v-cloak>
+      <v-navigation-drawer
+        v-model="drawer"
+        fixed
+        clipped
+        app
+      >
+        <v-list dense> 
+          <v-subheader class="mt-3 grey--text text--darken-1">菜单</v-subheader> 
+          <v-list-tile @click="drawer = !drawer"> 
+            <v-list-tile-action>
+              <v-icon>history</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                test
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+    
+          <v-list-tile @click="drawer = !drawer">
+            <v-list-tile-action>
+              <v-icon>history</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                test2
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+    
+        </v-list>
+      </v-navigation-drawer>
+  
+        <v-toolbar
+          color="red"
+          dense
+          fixed
+          clipped-left
+          app
+        >
+          <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-icon class="mx-3"></v-icon>
+        <v-toolbar-title class="v-toolbar__title mr-5 align-center">
+        <!-- <span class="title" style="color:#FFF">科城政府中心管理后台 <small> 欢迎您!</small></span> -->
+          <span class="title" style="color:#FFF">文件内容校对</span>
+        </v-toolbar-title>
+        </v-toolbar>
+  
+      <v-content>
+        <router-view>
+          <component v-bind:is="router" v-bind:global="global"></component>
+        </router-view>
+      </v-content>
+  
+      <v-footer app>
+        <v-layout row wrap style="margin-bottom: 100px;">
+          <v-flex xs8>
+          </v-flex>
+          <v-flex xs4>
+            <v-alert
+              dismissible
+              transition="scale-transition"
+              type="warning"
+              color="green"
+              outline
+              >
+              <!-- {{global.common.utils.models.alert.message}} -->
+            </v-alert>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap style="position:absolute;bottom:5px;width : 100%">
+          <v-flex xs12 style="width:100%;text-align:center">
+            <a style="color : #999" href="http://www.miitbeian.gov.cn/">
+              👮‍粤ICP备16050563号-2
+            </a>
+          </v-flex>
+        </v-layout>
+      </v-footer>
+     </v-app>
+  </div>
+
+  <script src="../library/swc.js"></script>
+  <script src="./comp/input_id_num.js"></script>
+  <script src="./comp/login.js"></script>
+  <script src="./comp/change_password.js"></script>
+  <script src="./comp/file_check.js"></script>
+  <script>
+    var global = {
+      config : {
+        baseUrl : "",
+        bussinessName : "student_confirm"
+      },
+
+      // 和页面相关
+      bussiness : {
+        page_name : "file_check",
+        init_page : "input_id_num_page",
+        login_success_page : "file_check_page"
+      }
+    }
+    location.hash = global.bussiness.login_success_page;
+    // 这里定义全局业务参数
+    var vueHandle = new Vue({
+      el: '#app',
+      data : {
+        drawer : false,
+        router : global.bussiness.login_success_page,
+      },
+      mounted : function(){
+        var that = this;
+        window.onhashchange = function(){
+			that.router = location.hash.substring(1);
+        } 
+      }
+    })
+  </script>
+  
+</body>
+</html>
