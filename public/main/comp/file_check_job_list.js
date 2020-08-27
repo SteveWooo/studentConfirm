@@ -104,7 +104,7 @@ Vue.component("file_check_job_list_page", {
                 </v-card-title>
                 <div style="height:100px;line-height:100px">
                     <div style="width: 100%;margin-left:5%;height:40px;line-height:40px;size:28px;word-wrap:break-all">
-                        {{global.config.baseUrl}}/{{global.config.bussinessName}}/public/main/file_check.html?file_check_job_id={{linkPanel.file_check_job_id}}
+                        {{location.origin}}/{{global.config.bussinessName}}/public/main/file_check.html?file_check_job_id={{linkPanel.file_check_job_id}}
                     </div>
                 </div>
                 <v-divider></v-divider>
