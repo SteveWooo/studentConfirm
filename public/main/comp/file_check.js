@@ -80,6 +80,9 @@ Vue.component("file_check_page", {
         checkUnPass : function(){
             var that = this;
             let checkMessage = prompt("请描述信息存在的问题");
+            if (checkMessage == null) {
+                return ;
+            }
 
             // check no pass
             $.ajax({
