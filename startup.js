@@ -10,7 +10,7 @@ async function main(){
 
     // 注意引入swc文件路径。
     await require(`${__dirname}/kekev2/swc`)({
-        config : require(`${__dirname}/conf/config.${mode}.json`);
+        config : require(`${__dirname}/conf/config.${mode}.json`)
     });
     let swc = global.swc;
     
