@@ -92,6 +92,7 @@ Vue.component("file_check_job_create_page", {
 
                 var sheet = workbook.Sheets["Sheet1"];
                 var sheetJson = XLSX.utils.sheet_to_json(sheet);
+                
                 for (var i=that.config.titleLine-1;i<sheetJson.length;i++) {
                     var idNum = sheetJson[i][that.config.idNumColName];
                     // console.log(idNum);

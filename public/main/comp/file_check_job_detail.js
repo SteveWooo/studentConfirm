@@ -18,7 +18,6 @@ Vue.component("file_check_job_detail_page", {
                     if (!swc.http.resHandle(res)){
                         return ;
                     }
-                    console.log(res);
                     that.fileCheckJob.job = res.file_check_job;
                     that.fileCheckJob.detail = res.file_check_list;
                 }
