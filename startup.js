@@ -1,7 +1,16 @@
 async function main(){
+
+    let mode = "test";
+    for(var i=0;i<process.argv.length;i++) {
+        if (process.argv[i] == "-mode") {
+            mode = process.argv[i + 1];
+            break;
+        }
+    }
+
     // 注意引入swc文件路径。
     await require(`${__dirname}/kekev2/swc`)({
-        config : require(`${__dirname}/conf/config.test.json`)
+        config : require(`${__dirname}/conf/config.${mode}.json`);
     });
     let swc = global.swc;
     
