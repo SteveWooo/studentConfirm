@@ -16,7 +16,7 @@ Vue.component("input_id_num_page", {
                     if (!swc.http.resHandle(res)){
                         return ;
                     }
-                    
+                    global.param.id_num = form.id_num;
                     if (res.is_exists == true) {
                         location.hash = "login_page";
                     } else {
@@ -42,9 +42,13 @@ Vue.component("input_id_num_page", {
                     swc.ls.set("user", JSON.stringify(res.user));
                     location.hash = global.bussiness.login_success_page;
                     return ;
+                } else {
+                    swc.ls.set("session", undefined);
+                    swc.ls.set("user", undefined);
+                    if (session.length == 40) { // 说明session过期
+                        location.reload();
+                    }
                 }
-
-                
             }
         })
         

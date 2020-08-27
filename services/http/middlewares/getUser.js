@@ -1,25 +1,33 @@
-module.exports = async (options)=>{
-	return async function(req, res, next){
-		let swc = global.swc
-		req.swc = swc;
-		if(options.config.model){
-			req.response = options.config.model;
-		} else {
-			req.response = {
-				code : 2000,
-				data : {},
-				error_message : ''
-			}
-		}
-
-		//请求来源
-		req.response.source = {
-			type : '',
-			user_id : ''
-		}
-
-		//默认响应头
-		req.response.headers = {};
-		next();
+async function getUser(req, res, next){
+	let swc = global.swc
+	let session = req.query.session;
+	if (session == undefined) {
+		res.send(JSON.stringify(await swc.Error({
+			code : 4003
+		})))
+		return ;
 	}
+
+	let user = await swc.dao.models.users.findAndCountAll({
+		where : {
+			session : session
+		}
+	})
+
+	if (user.count == 0) {
+		res.send(JSON.stringify(await swc.Error({
+			code : 4003,
+			message : "session无效"
+		})))
+		return ;
+	}
+
+	req.response.source = {
+		user_id : user.rows[0].user_id,
+		id_num : user.rows[0].id_num
+	}
+
+	next();
 }
+
+module.exports = getUser

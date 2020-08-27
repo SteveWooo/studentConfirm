@@ -7,11 +7,11 @@
         "port" : 81
     },
     "mysql" : {
-		"host" : "127.0.0.1",
-		"user" : "root",
-		"password" : "111111",
-		"database" : "student_confirm",
-		"port" : 3306
+      "host" : "127.0.0.1",
+      "user" : "root",
+      "password" : "111111",
+      "database" : "student_confirm",
+      "port" : 3306
     },
     
     "salt" : "demo"

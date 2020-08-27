@@ -29,7 +29,7 @@ Vue.component("login_page", {
         },
     },
     mounted : function(){
-        
+        this.form.id_num = global.param.id_num;
     },
     template : `
     <v-container>

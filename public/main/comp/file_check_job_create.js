@@ -1,14 +1,16 @@
+
 Vue.component("file_check_job_create_page", {
     data : function(){
         return {
             form : {
-                fileData : {},
+                file_data : undefined,
+                file_check_name : ""
             },
             config : {
                 idNumColName : "身份证", // 自定义
                 titleLine : 1,
                 password : "",
-                iv : "12345678" // 先写死
+                iv : ""
             },
             fileReader : undefined,
             file : undefined
@@ -21,24 +23,28 @@ Vue.component("file_check_job_create_page", {
         submit : function(){
             var that = this;
             var form = this.form;
-            console.log(form);
-            // $.ajax({
-            //     url : global.config.baseUrl + "/" + global.config.bussinessName + "/api/user/change_password",
-            //     method : "post",
-            //     headers : {
-            //         "Content-Type" : "Application/json"
-            //     },
-            //     data : JSON.stringify(form),
-            //     success : function(res){
-            //         if (!swc.http.resHandle(res)){
-            //             return ;
-            //         }
-            //     }
-            // })
+            // console.log(form);
+            $.ajax({
+                url : global.config.baseUrl + "/" + global.config.bussinessName + "/api/file_check_job/create?session=" + swc.ls.get("session"),
+                method : "post",
+                headers : {
+                    "Content-Type" : "Application/json"
+                },
+                data : JSON.stringify(form),
+                success : function(res){
+                    if (!swc.http.resHandle(res)){
+                        return ;
+                    }
+
+                    alert("创建成功");
+                    location.hash = "file_check_job_list_page";
+                }
+            })
         },
     },
     mounted : function(){
         var that = this;
+        this.config.iv = global.bussiness.crypto.iv;
 
         // AES加密
         function encryptoAES(data, key, iv) {
@@ -49,7 +55,6 @@ Vue.component("file_check_job_create_page", {
                 mode: CryptoJS.mode.CBC, 
                 padding: CryptoJS.pad.Pkcs7
             });
-            // return secretData.toString();
             return secretData.toString();
         }
 
@@ -99,36 +104,44 @@ Vue.component("file_check_job_create_page", {
 
                     postData[idNum] = secretData;
                 }
-
-                that.form.fileData = postData;
+                that.form.file_data = postData;
                 // console.log(postData);
             }
-            // fileReader.readAsBinaryString(file[0]);
         })
     },
     template : `
     <v-container>
         <v-layout row wrap>
-            <v-row xs12>
-                填写信息
-            </v-row>
+            <v-flex xs8>
+                <v-btn small @click="location.hash='file_check_job_list_page'">
+                    返回
+                </v-btn>
+            </v-flex>
+            <v-flex xs4>
+                
+            </v-flex>
         </v-layout>
         <div style="margin-top:20px;">
-            <input type="text" v-model="config.idNumColName" placeholder="身份证列名称*">
-            <input type="file" id="file_check_job_create-file">
-            <v-btn @click="create">构造excel信息</v-btn>
-            <v-btn @click="submit">提交</v-btn>
+            <span>项目名称：</span><input type="text" v-model="form.file_check_name">
+            </br>
+            <span>身份证列名称：</span><input type="text" v-model="config.idNumColName" placeholder="身份证列名称*">
+            </br>
+            <span>待检查的excel文件：</span><input type="file" id="file_check_job_create-file">
+            </br>
+            <v-btn v-if="form.file_data == undefined" @click="create">构造excel信息</v-btn>
+            <v-btn v-if="form.file_data != undefined" @click="submit">提交</v-btn>
         </div>
         <div v-if="config.password.length != 0">
-            生成密码：{{config.password}}
+            密码：{{config.password}}
         </div>
         <div v-if="config.password.length != 0">
-            总信息数：{{Object.keys(form.fileData).length}}
+            文件行数：{{Object.keys(form.file_data).length}}
         </div>
         <div v-if="config.password.length != 0">
-           <div v-for="(value, key) in form.fileData">
+            <div>预览</div>
+            <div v-for="(value, key) in form.file_data">
                 {{key}} : {{value}}
-           </div>
+            </div>
         </div>
     </v-container>
     `

@@ -8,7 +8,13 @@ async function main(){
     // mysql 模块载入
     await swc.registerMysqlDao({
 		path : `${__dirname}/services/http/httpDao/mysql.js`
-	});
+    });
+    
+    // 中间件
+    await swc.registerMiddleware({
+        path : `${__dirname}/services/http/middlewares/getUser`,
+        moduleName : 'getUser'
+    })
 
     // http 服务
     await swc.registerHttpService({

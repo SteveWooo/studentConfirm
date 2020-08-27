@@ -13,7 +13,7 @@ module.exports = {
 		var query = req.query;
 		var swc = global.swc;
 
-        let session = req.query.session;
+		let session = req.query.session;
 
         let user = await swc.dao.models.users.findAndCountAll({
             where : {
@@ -24,7 +24,10 @@ module.exports = {
             req.response.is_exists = false;
         } else {
             req.response.is_exists = true;
-            req.response.user = user.rows[0];
+            req.response.user = {
+				user_id : user.rows[0].user_id,
+				id_num : user.rows[0].id_num
+			}
         }
 
         next();
