@@ -34,7 +34,6 @@ module.exports = {
 		let job = await swc.dao.models.file_check_jobs.findAndCountAll({
 			where : {
 				file_check_job_id : file_check_job_id,
-				create_by : source.user_id,
 				status : 1,
 			}
 		})
