@@ -47,12 +47,18 @@ module.exports = {
 			return ;
 		}
 
+		let conditions = {
+			file_check_job_id : file_check_job_id,
+			status : 1,
+		}
+
+		// 如果是自己创建的任务，就能看全部
+		if (source.user_id != job.rows[0].create_by) {
+			conditions.id_num = source.id_num
+		}
+
 		let detailJobs = await swc.dao.models.file_checks.findAndCountAll({
-			where : {
-				file_check_job_id : file_check_job_id,
-				id_num : source.id_num,
-				status : 1,
-			},
+			where : conditions,
 			include : [{
 				as : "user",
 				model : swc.dao.models.users
