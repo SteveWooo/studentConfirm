@@ -48,11 +48,13 @@ module.exports = {
 
 		let conditions = {
 			file_check_job_id : file_check_job_id,
-			status : 1,
+			status : 1
 		}
 
 		// 如果是自己创建的任务，就能看全部
-		if (source.user_id != job.rows[0].create_by) {
+		if (source.user_id != job.rows[0].create_by && query.all == 1) {
+			
+		} else {
 			conditions.id_num = source.id_num
 		}
 

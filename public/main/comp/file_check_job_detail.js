@@ -12,7 +12,8 @@ Vue.component("file_check_job_detail_page", {
             var that = this;
             $.ajax({
                 url : global.config.baseUrl + "/" + global.config.bussinessName + "/api/file_check_job/get?session=" + swc.ls.get("session") + 
-                    "&file_check_job_id=" + global.param.file_check_job_id,
+                    "&file_check_job_id=" + global.param.file_check_job_id + 
+                    "&all=1",
                 method : "get",
                 success : function(res){
                     if (!swc.http.resHandle(res)){
