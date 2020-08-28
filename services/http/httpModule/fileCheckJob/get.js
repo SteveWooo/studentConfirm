@@ -52,7 +52,7 @@ module.exports = {
 		}
 
 		// 如果是自己创建的任务，就能看全部
-		if (source.user_id != job.rows[0].create_by && query.all == 1) {
+		if (source.user_id == job.rows[0].create_by && query.all == 1) {
 			
 		} else {
 			conditions.id_num = source.id_num
